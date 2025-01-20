@@ -32,7 +32,7 @@ const Footer = () => {
             (+012) 3456 789
           </p>
         </div>
-        <div className="footer_col">
+        <div className="footer__col">
           <h4>COMPANY</h4>
           <Link to="/">Home</Link>
           <Link to="/about">About Us</Link>
