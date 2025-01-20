@@ -9,7 +9,7 @@ const Banner = () => {
         <h4 className="uppercase">UP TO 25% DISCOUNT ON</h4>
         <h1>Girl's fashion</h1>
         <p>
-          Browse and discover incredible offers on clothing and accesories for
+          Browse and discover incredible offers on clothing and accessories for
           women.
         </p>
         <button className="btn">

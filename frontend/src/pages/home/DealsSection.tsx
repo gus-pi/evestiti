@@ -11,7 +11,7 @@ const DealsSection = () => {
         <h4>Deals Of The Month</h4>
         <p>
           Deals for the month of January, make sure to take advantage of this
-          amazing deals on clothing, accesories, footwear and many more!
+          amazing deals on clothing, accessories, footwear and many more!
         </p>
         <div className="deals__countdown flex-wrap">
           <div className="deals__countdown__card">

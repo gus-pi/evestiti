@@ -7,8 +7,8 @@ import category4 from '../../assets/category-4.jpg';
 const Categories = () => {
   const categories = [
     {
-      name: 'Accesories',
-      path: 'accesories',
+      name: 'Accessories',
+      path: 'accessories',
       image: category1,
     },
     {
