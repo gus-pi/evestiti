@@ -1,12 +1,28 @@
 export type Product = {
-    id: number,
-    name: string,
-    category: string,
-    description: string,
-    price: number,
-    oldPrice?: number,
-    image: string,
-    color: string,
-    rating: number,
-    author?: string
-}
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  price: number;
+  oldPrice?: number;
+  image: string;
+  color: string;
+  rating: number;
+  author?: string;
+};
+
+export type Filter = {
+  category: string;
+  color: string;
+  priceRange: { label: string; min: number; max: number };
+};
+
+export type Filters = {
+  categories: string[]; // Array of category strings
+  colors: string[]; // Array of color strings
+  priceRanges: {
+    label: string; // A descriptive label for the price range
+    min: number; // Minimum price
+    max: number; // Maximum price
+  }[]; // Array of price range objects
+};
