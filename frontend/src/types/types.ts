@@ -1,5 +1,5 @@
 export type Product = {
-  id: number;
+  _id: number;
   name: string;
   category: string;
   description: string;
@@ -9,6 +9,7 @@ export type Product = {
   color: string;
   rating: number;
   author?: string;
+  quantity: number
 };
 
 export type Filter = {
