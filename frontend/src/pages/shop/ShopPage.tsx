@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import productsData from '../../data/products.json';
 import { ProductCards } from './ProductCards';
-import { Product } from '../../types/types';
 import ShopFiltering from './ShopFiltering';
 
 const filters = {
@@ -44,13 +43,10 @@ const ShopPage = () => {
 
     //filter by price range
     if (activeFilter.priceRange && activeFilter.priceRange.label !== 'all') {
-      const [minPrice, maxPrice] = activeFilter.priceRange.label
-        .split('to')
-        .map(Number);
+      const { min, max } = activeFilter.priceRange;
       filteredProducts = filteredProducts.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
+        (product) => product.price >= min && product.price <= max
       );
-
       setProducts(filteredProducts);
     }
   };

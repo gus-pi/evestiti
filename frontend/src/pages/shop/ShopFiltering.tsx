@@ -58,7 +58,7 @@ const ShopFiltering = ({
         ))}
       </div>
 
-      {/* price range filter
+      {/* price range filter */}
       <div className="flex flex-col space-y-2">
         <h4 className="font-medium text-lg">Price Range</h4>
         <hr />
@@ -68,16 +68,24 @@ const ShopFiltering = ({
               type="radio"
               name="priceRange"
               id="priceRange"
-              value={range.label} // Use `range.label` for display purposes
-              checked={activeFilter.priceRange?.label === range.label} // Check against the `label`
-              onChange={(e) =>
+              value={`${range.min} to ${range.max}`}
+              checked={activeFilter.priceRange.label === range.label}
+              onChange={() =>
                 setActiveFilter({ ...activeFilter, priceRange: range })
               }
             />
             <span className="ml-1">{range.label}</span>
           </label>
         ))}
-      </div> */}
+      </div>
+
+      {/* clear all filters */}
+      <button
+        onClick={clearFilters}
+        className="bg-primary py-1 px-4 text-white rounded"
+      >
+        Clear All
+      </button>
     </div>
   );
 };
