@@ -14,12 +14,17 @@ app.use(express.urlencoded({ limit: '25mb' }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.app.use(
+app.use(
   cors({
     origin: 'http://localhost:3000',
     credentials: true,
   })
 );
+
+//routes
+const authRoutes = require('./src/users/user.route');
+
+app.use('/api/auth', authRoutes);
 
 main()
   .then(() => console.log('mongodb successfully connected'))
