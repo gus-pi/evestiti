@@ -24,5 +24,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+//check matching password
+userSchema.methods.comparePassword = function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
 const User = new model('User', userSchema);
 module.exports = User;
