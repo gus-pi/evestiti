@@ -108,6 +108,56 @@ router.put('/users/:id', async (req, res) => {
   }
 });
 
+//update profile
+router.patch('/edit-profile', async (req, res) => {
+  try {
+    const { userId, username, profileImage, bio, profession } = req.body;
+
+    if (!userId) {
+      return res.status(400).send({ message: 'User ID is required' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+
+    //updating profile
+    if (username !== undefined) {
+      user.username = username;
+    }
+
+    if (profileImage !== undefined) {
+      user.profileImage = profileImage;
+    }
+
+    if (bio !== undefined) {
+      user.bio = bio;
+    }
+
+    if (profession !== undefined) {
+      user.profession = profession;
+    }
+
+    await user.save();
+    res.status(200).send({
+      message: 'Profile updated succesfully',
+      user: {
+        _id: user._id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+        profileImage: user.profileImage,
+        bio: user.bio,
+        profession: user.profession,
+      },
+    });
+  } catch (error) {
+    console.error('Error updating user', error);
+    res.status(500).send({ message: 'Error updating user' });
+  }
+});
+
 // router.get('/users', verifyToken, async (req, res) => {
 //   res.send({ message: 'Protected route' });
 // });

@@ -8,10 +8,13 @@ const userSchema = new Schema({
   role: {
     type: String,
     default: 'user',
-    profileImage: String,
-    bio: { type: String, maxlength: 200 },
-    profession: String,
-    createdAt: { type: Date, default: Date.now },
+  },
+  profileImage: String,
+  bio: { type: String, maxlength: 200 },
+  profession: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
