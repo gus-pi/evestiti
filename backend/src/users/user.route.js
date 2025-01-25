@@ -90,6 +90,24 @@ router.get('/users', async (req, res) => {
   }
 });
 
+//update user role
+router.put('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+    const user = await User.findByIdAndUpdate(id, { role }, { new: true });
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    res.status(200).send({ message: 'User role updated successfully', user });
+  } catch (error) {
+    console.error('Error updating user', error);
+    res.status(500).send({ message: 'Error updating user' });
+  }
+});
+
 // router.get('/users', verifyToken, async (req, res) => {
 //   res.send({ message: 'Protected route' });
 // });
