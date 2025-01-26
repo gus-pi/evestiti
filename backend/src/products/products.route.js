@@ -31,4 +31,46 @@ router.post('/create-product', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const {
+      category,
+      color,
+      minPrice,
+      maxPrice,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    let filter = {};
+    if (category && category !== 'all') {
+      filter.category = category;
+    }
+    if (color && color !== 'all') {
+      filter.color = color;
+    }
+    if (minPrice && maxPrice) {
+      const min = parseFloat(minPrice);
+      const max = parseFloat(maxPrice);
+      if (!isNaN(min) && !isNaN(maxPrice)) {
+        filter.price = { $gte: min, $lte: max };
+      }
+    }
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const totalProducts = await Products.countDocuments(filter);
+    const totalPages = Math.ceil(totalProducts / parseInt(limit));
+    const products = await Products.find(filter)
+      .skip(skip)
+      .limit(parseInt(limit))
+      .populate('author', 'email')
+      .sort({ createAt: -1 });
+
+    res.status(200).send({ products, totalPages, totalProducts });
+  } catch (error) {
+    console.error('Error fetching products', error);
+    res.status(500).send({ message: 'Error fetching products' });
+  }
+});
+
 module.exports = router;
