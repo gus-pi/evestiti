@@ -13,7 +13,7 @@ const ProductSchema = new Schema({
   color: String,
   rating: { type: Number, default: 0 },
   quantity: Number,
-  author: { type: Types.ObjectId, ref: 'User', required: true },
+  author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 const Products = new model('Product', ProductSchema);

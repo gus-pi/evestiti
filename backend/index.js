@@ -23,8 +23,10 @@ app.use(
 
 //routes
 const authRoutes = require('./src/users/user.route');
+const productsRoutes = require('./src/products/products.route');
 
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productsRoutes);
 
 main()
   .then(() => console.log('mongodb successfully connected'))
