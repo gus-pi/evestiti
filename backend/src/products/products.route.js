@@ -1,6 +1,7 @@
 const express = require('express');
 const Products = require('./products.model');
 const Reviews = require('../reviews/reviews.model');
+const verifyToken = require('../middleware/verifyToken');
 
 const router = express.Router();
 
@@ -61,11 +62,10 @@ router.get('/', async (req, res) => {
     const skip = (parseInt(page) - 1) * parseInt(limit);
     const totalProducts = await Products.countDocuments(filter);
     const totalPages = Math.ceil(totalProducts / parseInt(limit));
-    const products = await Products.find(filter)
-      .skip(skip)
+    const products = await Products.find(filter).skip(skip)``
       .limit(parseInt(limit))
       .populate('author', 'email')
-      .sort({ createAt: -1 });
+      .sort({ createdAt: -1 });
 
     res.status(200).send({ products, totalPages, totalProducts });
   } catch (error) {
@@ -94,6 +94,82 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching product', error);
     res.status(500).send({ message: 'Error fetching product' });
+  }
+});
+
+//update a product
+router.patch('/update-product/:id', verifyToken, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updatedProduct = await Products.findByIdAndUpdate(
+      productId,
+      { ...req.body },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).send({ message: 'Product not found' });
+    }
+
+    res.status(200).send({
+      message: 'Product updated successfully',
+      product: updatedProduct,
+    });
+  } catch (error) {
+    console.error('Error updating product', error);
+    res.status(500).send({ message: 'Error updating product' });
+  }
+});
+
+//delete a product
+router.delete('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const deletedProduct = await Products.findByIdAndDelete(productId);
+    if (!deletedProduct) {
+      return res.status(404).send({ message: 'Product not found' });
+    }
+
+    //delete review related to product
+    await Reviews.deleteMany({ productId });
+
+    res.status(200).send({ message: 'Product deleted succesfully' });
+  } catch (error) {
+    console.error('Error deleting product', error);
+    res.status(500).send({ message: 'Error deleting product' });
+  }
+});
+
+//get related products
+router.get('/related/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).send({ message: 'Product ID is required' });
+    }
+    const product = await Products.findById(id);
+    if (!product) {
+      return res.status(404).send({ message: 'Product not found' });
+    }
+
+    const titleRegex = new RegExp(
+      product.name
+        .split(' ')
+        .filter((word) => word.length > 1)
+        .join('|'),
+      'i'
+    );
+
+    const relatedProducts = await Products.find({
+      _id: { $ne: id },
+      $or: [{ name: { $regex: titleRegex } }, { category: product.category }],
+    });
+
+    res.status(200).send(relatedProducts);
+  } catch (error) {
+    console.error('Error fetching related products', error);
+    res.status(500).send({ message: 'Error fetching related products' });
   }
 });
 
