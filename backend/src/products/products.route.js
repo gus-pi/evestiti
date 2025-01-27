@@ -63,7 +63,8 @@ router.get('/', async (req, res) => {
     const skip = (parseInt(page) - 1) * parseInt(limit);
     const totalProducts = await Products.countDocuments(filter);
     const totalPages = Math.ceil(totalProducts / parseInt(limit));
-    const products = await Products.find(filter).skip(skip)``
+    const products = await Products.find(filter)
+      .skip(skip)
       .limit(parseInt(limit))
       .populate('author', 'email')
       .sort({ createdAt: -1 });

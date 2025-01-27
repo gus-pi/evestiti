@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import productsData from '../../data/products.json';
 import { ProductCards } from './ProductCards';
 import ShopFiltering from './ShopFiltering';
+import { useFetchAllProductsQuery } from '../../redux/features/products/productApi';
 
 const filters = {
   categories: ['all', 'accessories', 'dress', 'jewelry', 'cosmetics'],
@@ -16,44 +16,31 @@ const filters = {
 };
 
 const ShopPage = () => {
-  const [products, setProducts] = useState(productsData);
-
   const [activeFilter, setActiveFilter] = useState({
     category: 'all',
     color: 'all',
     priceRange: { label: '0 to Infinity', min: 0, max: Infinity },
   });
 
-  const applyFilter = () => {
-    let filteredProducts = productsData;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(8);
 
-    //filter by category
-    if (activeFilter.category && activeFilter.category !== 'all') {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category === activeFilter.category
-      );
-    }
+  const { category, color, priceRange } = activeFilter;
+  const minPrice = priceRange.min;
+  const maxPrice = priceRange.max;
 
-    //filter by color
-    if (activeFilter.color && activeFilter.color !== 'all') {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.color === activeFilter.color
-      );
-    }
-
-    //filter by price range
-    if (activeFilter.priceRange && activeFilter.priceRange.label !== 'all') {
-      const { min, max } = activeFilter.priceRange;
-      filteredProducts = filteredProducts.filter(
-        (product) => product.price >= min && product.price <= max
-      );
-      setProducts(filteredProducts);
-    }
-  };
-
-  useEffect(() => {
-    applyFilter();
-  }, [activeFilter]);
+  const {
+    data: { products, totalPages, totalProducts } = {},
+    error,
+    isLoading,
+  } = useFetchAllProductsQuery({
+    category: category !== 'all' ? category : '',
+    color: color !== 'all' ? color : '',
+    minPrice: isNaN(minPrice) ? '' : minPrice,
+    maxPrice: isNaN(maxPrice) ? '' : maxPrice,
+    page: currentPage,
+    limit: productsPerPage,
+  });
 
   //clear the filters
   const clearFilters = () => {
@@ -63,6 +50,18 @@ const ShopPage = () => {
       priceRange: { label: '0 to Infinity', min: 0, max: Infinity },
     });
   };
+
+  const handlePageChange = (pageNumber: number) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading products</div>;
+
+  const startProduct = (currentPage - 1) * productsPerPage + 1;
+  const endProduct = startProduct + products.length - 1;
 
   return (
     <>
@@ -85,9 +84,43 @@ const ShopPage = () => {
           {/* right side */}
           <div>
             <h3 className="text-xl font-medium mb-4">
-              Available Products: {products.length}
+              Showing: {endProduct + 1 - startProduct} of {totalProducts}{' '}
+              products
             </h3>
             <ProductCards products={products} />
+
+            {/* pagination controls */}
+            <div className="mt-6 flex justify-center">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
+              >
+                Previous
+              </button>
+
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`px-4 py-2 ${
+                    currentPage === index + 1
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-300 text-gray-700'
+                  } rounded-md mx-1`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md ml-2"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </section>
