@@ -29,11 +29,20 @@ const PostAReview = ({ isModalOpen, handleClose }: PostAReviewProps) => {
       comment,
       rating,
       userId: user?._id,
-      product: id,
+      productId: id,
     };
 
     try {
-    } catch (error) {}
+      const response = await postReview(newComment).unwrap();
+      alert('Comment posted successfully!');
+      setComment('');
+      setRating(0);
+      refetch();
+    } catch (error: any) {
+      alert(error.data.message);
+      console.log('user: ', user);
+    }
+    handleClose();
   };
 
   return (
@@ -55,10 +64,30 @@ const PostAReview = ({ isModalOpen, handleClose }: PostAReviewProps) => {
               {rating >= star ? (
                 <i className="ri-star-fill"></i>
               ) : (
-                <i className="ri-star-fill"></i>
+                <i className="ri-star-line"></i>
               )}
             </span>
           ))}
+        </div>
+        <textarea
+          className="w-full border border-x-gray-300 p-2 rounded-md mb-4 focus:outline-none"
+          rows={4}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        ></textarea>
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={handleClose}
+            className="px-4 py-2 bg-gray-300 rounded-md"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 bg-primary text-white rounded-md "
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
