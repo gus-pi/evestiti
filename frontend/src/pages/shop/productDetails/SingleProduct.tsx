@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useFetchProductByIdQuery } from '../../../redux/features/products/productApi';
 import { addToCart } from '../../../redux/features/cart/cartSlice';
 import { Product } from '../../../types/types';
+import ReviewsCard from '../reviews/ReviewsCard';
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -82,8 +83,10 @@ const SingleProduct = () => {
           </div>
         </div>
       </section>
-      {/* TODO add revieews with api */}
-      <section className="section__container mt-8">Reviews</section>
+      {/* display review */}
+      <section className="section__container mt-8">
+        <ReviewsCard productReviews={productReviews} />
+      </section>
     </>
   );
 };

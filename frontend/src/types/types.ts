@@ -12,6 +12,20 @@ export type Product = {
   quantity: number
 };
 
+type User = {
+  username: string;
+  email: string;
+};
+
+export type Review = {
+  productId: string;
+  userId: User;
+  content: string;
+  rating: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type Filter = {
   category: string;
   color: string;
