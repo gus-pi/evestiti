@@ -39,8 +39,9 @@ const PostAReview = ({ isModalOpen, handleClose }: PostAReviewProps) => {
       setRating(0);
       refetch();
     } catch (error: any) {
-      alert(error.data.message);
-      console.log('user: ', user);
+      if (!user) {
+        alert('Please log in to submit a review');
+      } else alert(error.data.message);
     }
     handleClose();
   };
