@@ -47,6 +47,14 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register />,
   },
+  {
+    path: '/success',
+    element: <div>Payment Successful</div>,
+  },
+  {
+    path: '/sucess',
+    element: <div>Payment Successful</div>,
+  },
 ]);
 
 export default router;
