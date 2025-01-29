@@ -9,7 +9,7 @@ export type Product = {
   color: string;
   rating: number;
   author?: string;
-  quantity: number
+  quantity: number;
 };
 
 type User = {
@@ -40,4 +40,20 @@ export type Filters = {
     min: number; // Minimum price
     max: number; // Maximum price
   }[]; // Array of price range objects
+};
+
+export type Order = {
+  _id?: string;
+
+  amount?: number;
+
+  createdAt?: string;
+
+  email?: string;
+
+  products?: Product[];
+
+  status?: string;
+
+  updatedAt?: string;
 };

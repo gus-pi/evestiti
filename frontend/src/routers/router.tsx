@@ -7,6 +7,7 @@ import ShopPage from '../pages/shop/ShopPage';
 import SingleProduct from '../pages/shop/productDetails/SingleProduct';
 import Login from '../component/Login';
 import Register from '../component/Register';
+import PaymentSuccess from '../component/PaymentSuccess';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
         path: '/shop/:id',
         element: <SingleProduct />,
       },
+      {
+        path: '/success',
+        element: <PaymentSuccess />,
+      },
+      {
+        path: '/cancel',
+        element: <div>Payment Cancelled</div>,
+      },
     ],
   },
   {
@@ -46,14 +55,6 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />,
-  },
-  {
-    path: '/success',
-    element: <div>Payment Successful</div>,
-  },
-  {
-    path: '/sucess',
-    element: <div>Payment Successful</div>,
   },
 ]);
 

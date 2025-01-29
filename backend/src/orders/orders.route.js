@@ -25,8 +25,8 @@ router.post('/create-checkout-session', async (req, res) => {
       payment_method_types: ['card'],
       line_items: line_items,
       mode: 'payment',
-      success_url: `http://localhost:5000/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:5000/cancel`,
+      success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `http://localhost:3000/cancel`,
     });
 
     res.json({
@@ -62,11 +62,11 @@ router.post('/confirm-payment', async (req, res) => {
         products: lineItems,
         email: session.customer_details.email,
         status:
-          session.payment_intent.status === 'successed' ? 'pending' : 'failed',
+          session.payment_intent.status === 'succeeded' ? 'pending' : 'failed',
       });
     } else {
       order.status =
-        session.payment_intent.status === 'successed' ? 'pending' : 'failed';
+        session.payment_intent.status === 'succeeded' ? 'pending' : 'failed';
     }
 
     await order.save();
