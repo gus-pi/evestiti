@@ -37,7 +37,7 @@ const TimelineStep = ({
     isCompleted || isCurrent ? 'text-gray-900' : 'text-gray-500';
   const descriptionTextColor =
     isCompleted || isCurrent ? 'text-gray-900' : 'text-gray-500';
-  console.log('Order: ', order);
+
   return (
     <li className="relative mb-6 sm:mb-0 sm:pl-10">
       <div className="flex items-center">
