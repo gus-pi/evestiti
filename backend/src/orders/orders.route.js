@@ -43,6 +43,7 @@ router.post('/create-checkout-session', async (req, res) => {
 //confirm payment
 router.post('/confirm-payment', async (req, res) => {
   const { session_id } = req.body;
+  // console.log(session_id);
 
   try {
     const session = await stripe.checkout.sessions.retrieve(session_id, {
@@ -50,6 +51,7 @@ router.post('/confirm-payment', async (req, res) => {
     });
 
     const paymentIntentId = session.payment_intent.id;
+
     let order = await Order.findOne({ orderId: paymentIntentId });
 
     if (!order) {
@@ -57,11 +59,13 @@ router.post('/confirm-payment', async (req, res) => {
         productId: item.price.product,
         quantity: item.quantity,
       }));
+
       const amount = session.amount_total / 100;
+
       order = new Order({
         orderId: paymentIntentId,
-        amount,
         products: lineItems,
+        amount: amount,
         email: session.customer_details.email,
         status:
           session.payment_intent.status === 'succeeded' ? 'pending' : 'failed',
@@ -71,11 +75,14 @@ router.post('/confirm-payment', async (req, res) => {
         session.payment_intent.status === 'succeeded' ? 'pending' : 'failed';
     }
 
+    // Save the order to MongoDB
     await order.save();
+    //   console.log('Order saved to MongoDB', order);
+
     res.json({ order });
   } catch (error) {
-    console.error('Error confirming payment', error);
-    res.status(500).send({ message: 'Error confirming payment' });
+    console.error('Error confirming payment:', error);
+    res.status(500).json({ error: 'Failed to confirm payment' });
   }
 });
 
