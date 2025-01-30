@@ -9,6 +9,7 @@ import Login from '../component/Login';
 import Register from '../component/Register';
 import PaymentSuccess from '../component/PaymentSuccess';
 import DashboardLayout from '../pages/dashboard/DashboardLayout';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
   //dashboard stats routes
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute role="">
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       //user routes
       { path: '', element: <div>User Dashboard</div> },
@@ -40,8 +45,22 @@ const router = createBrowserRouter([
       { path: 'reviews', element: <div>User Reviews</div> },
 
       //admin routes (only accessible by admins) TODO:private route using role field
-      { path: 'admin', element: <div>Admin Main</div> },
-      { path: 'add-new-post', element: <div>New Product</div> },
+      {
+        path: 'admin',
+        element: (
+          <PrivateRoute role="admin">
+            <div>Admin Main</div>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'add-new-post',
+        element: (
+          <PrivateRoute role="admin">
+            <div>Add New Product</div>
+          </PrivateRoute>
+        ),
+      },
       { path: 'manage-products', element: <div>Manage Products`</div> },
       { path: 'update-product/:id', element: <div>Update Product</div> },
       { path: 'users', element: <div>All Users</div> },
