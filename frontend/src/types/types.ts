@@ -57,3 +57,9 @@ export type Order = {
 
   updatedAt?: string;
 };
+
+export type Stats = {
+  totalPayments: number,
+  totalReviews: number,
+  totalPurchasedProducts: number
+}

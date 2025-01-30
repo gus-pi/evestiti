@@ -10,6 +10,7 @@ import Register from '../component/Register';
 import PaymentSuccess from '../component/PaymentSuccess';
 import DashboardLayout from '../pages/dashboard/DashboardLayout';
 import PrivateRoute from './PrivateRoute';
+import UserDashMain from '../pages/dashboard/user/dashboard/UserDashMain';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
     ),
     children: [
       //user routes
-      { path: '', element: <div>User Dashboard</div> },
+      { path: '', element: <UserDashMain /> },
       { path: 'orders', element: <div>User Orders</div> },
       { path: 'payments', element: <div>User Payments</div> },
       { path: 'profile', element: <div>User Profile</div> },
