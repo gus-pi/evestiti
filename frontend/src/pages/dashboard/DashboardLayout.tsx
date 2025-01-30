@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { RootState } from '../../redux/store';
+import UserDashboard from './UserDashboard';
 
 const DashboardLayout = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -14,7 +15,7 @@ const DashboardLayout = () => {
       case 'admin':
         return <div>Admin Dashboard</div>;
       case 'user':
-        return <div>User Dashboard</div>;
+        return <UserDashboard />;
 
       default:
         return <Navigate to="/login" replace />;
