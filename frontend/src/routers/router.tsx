@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'add-new-post',
+        path: 'add-new-product',
         element: (
           <PrivateRoute role="admin">
             <div>Add New Product</div>
