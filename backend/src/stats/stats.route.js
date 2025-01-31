@@ -31,8 +31,8 @@ router.get('/user-stats/:email', async (req, res) => {
       totalPaymentsResult.length > 0 ? totalPaymentsResult[0].totalAmount : 0;
 
     //get total reviews
-    const totalReviews = await Reviews.countDocument({
-      userId: user._d,
+    const totalReviews = await Reviews.countDocuments({
+      userId: user._id,
     });
 
     //total purchased products

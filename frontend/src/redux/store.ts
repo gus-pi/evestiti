@@ -14,10 +14,15 @@ export const store = configureStore({
     auth: authReducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
-    [statsApi.reducerPath]: statsApi.reducer
+    [statsApi.reducerPath]: statsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, productsApi.middleware, reviewApi.middleware),
+    getDefaultMiddleware().concat(
+      authApi.middleware,
+      productsApi.middleware,
+      reviewApi.middleware,
+      statsApi.middleware
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
