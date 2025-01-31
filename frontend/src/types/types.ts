@@ -45,7 +45,7 @@ export type Filters = {
 export type Order = {
   _id?: string;
 
-  amount?: number;
+  amount: number | 0;
 
   createdAt?: string;
 

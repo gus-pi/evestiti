@@ -12,6 +12,7 @@ import DashboardLayout from '../pages/dashboard/DashboardLayout';
 import PrivateRoute from './PrivateRoute';
 import UserDashMain from '../pages/dashboard/user/dashboard/UserDashMain';
 import UserOrders from '../pages/dashboard/user/UserOrders';
+import UserPayments from '../pages/dashboard/user/UserPayments';
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
       //user routes
       { path: '', element: <UserDashMain /> },
       { path: 'orders', element: <UserOrders /> },
-      { path: 'payments', element: <div>User Payments</div> },
+      { path: 'payments', element: <UserPayments /> },
       { path: 'profile', element: <div>User Profile</div> },
       { path: 'reviews', element: <div>User Reviews</div> },
 
