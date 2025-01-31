@@ -20,7 +20,7 @@ type User = {
 export type Review = {
   productId: string;
   userId: User;
-  content: string;
+  comment: string;
   rating: number;
   createdAt: Date;
   updatedAt: Date;

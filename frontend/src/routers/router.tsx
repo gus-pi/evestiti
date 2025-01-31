@@ -13,6 +13,7 @@ import PrivateRoute from './PrivateRoute';
 import UserDashMain from '../pages/dashboard/user/dashboard/UserDashMain';
 import UserOrders from '../pages/dashboard/user/UserOrders';
 import UserPayments from '../pages/dashboard/user/UserPayments';
+import UserReviews from '../pages/dashboard/user/UserReviews';
 
 const router = createBrowserRouter([
   {
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
       { path: 'orders', element: <UserOrders /> },
       { path: 'payments', element: <UserPayments /> },
       { path: 'profile', element: <div>User Profile</div> },
-      { path: 'reviews', element: <div>User Reviews</div> },
+      { path: 'reviews', element: <UserReviews /> },
 
       //admin routes (only accessible by admins) TODO:private route using role field
       {
