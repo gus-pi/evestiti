@@ -45,7 +45,7 @@ export type Filters = {
 export type Order = {
   _id?: string;
 
-  amount: number | 0;
+  amount?: number | 0;
 
   createdAt?: string;
 
@@ -59,11 +59,12 @@ export type Order = {
 };
 
 export type Stats = {
-  totalPayments: number,
-  totalReviews: number,
-  totalPurchasedProducts: number
-  totalEarnings: number
-  totalOrders: number
-  totalUsers: number
-  totalProducts: number
-}
+  totalPayments: number;
+  totalReviews: number;
+  totalPurchasedProducts: number;
+  totalEarnings: number;
+  totalOrders: number;
+  totalUsers: number;
+  totalProducts: number;
+  monthlyEarnings: { month: any; year: any; earnings: any }[];
+};
