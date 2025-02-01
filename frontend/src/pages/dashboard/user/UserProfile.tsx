@@ -1,19 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useEditProfileMutation } from '../../../redux/features/auth/authApi';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import avatarImg from '../../../assets/avatar.png';
+import { setUser } from '../../../redux/features/auth/authSlice';
 
 const UserProfile = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
   const [editProfile, { isLoading, isError, error, isSuccess }] =
-    useEditProfileMutation(user);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>failed to load reviews.</div>;
+    useEditProfileMutation();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -24,14 +22,47 @@ const UserProfile = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        username: user.username,
+        profileImage: user?.profileImage || '',
+        bio: user?.bio || '',
+        profession: user?.profession || '',
+        userId: user?._id || '',
+      });
+    }
+  }, [user]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {};
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const updatedUser = {
+      username: formData.username,
+      profileImage: formData.profileImage,
+      bio: formData.bio,
+      profession: formData.profession,
+      userId: formData.userId,
+    };
+    try {
+      const response = await editProfile(updatedUser).unwrap();
+      dispatch(setUser(response.user));
+      localStorage.setItem('user', JSON.stringify(response.user));
+      alert('User updated successfully');
+    } catch (error) {
+      console.error('Failed to update profile', error);
+      alert('Failed to update profile, please try again');
+    }
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="container mx-auto p-6">
@@ -114,7 +145,7 @@ const UserProfile = () => {
                   name="profileImage"
                   value={formData?.profileImage}
                   onChange={handleChange}
-                  placeholder="profileImage url"
+                  placeholder="profile image url"
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"
                   required
                 />

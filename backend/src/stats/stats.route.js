@@ -65,7 +65,7 @@ router.get('/admin-stats', async (req, res) => {
       {
         $group: {
           _id: null,
-          totalEarning: { $sum: '$amount' },
+          totalEarnings: { $sum: '$amount' },
         },
       },
     ]);

@@ -62,4 +62,8 @@ export type Stats = {
   totalPayments: number,
   totalReviews: number,
   totalPurchasedProducts: number
+  totalEarnings: number
+  totalOrders: number
+  totalUsers: number
+  totalProducts: number
 }
