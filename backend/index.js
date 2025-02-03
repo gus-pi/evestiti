@@ -46,6 +46,8 @@ async function main() {
   });
 }
 
+app.post('/uploadIMage', (req, res) => {});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

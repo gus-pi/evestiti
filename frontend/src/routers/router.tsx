@@ -16,6 +16,7 @@ import UserPayments from '../pages/dashboard/user/UserPayments';
 import UserReviews from '../pages/dashboard/user/UserReviews';
 import UserProfile from '../pages/dashboard/user/UserProfile';
 import AdminDashMain from '../pages/dashboard/admin/dashboard/AdminDashMain';
+import AddProduct from '../pages/dashboard/admin/addProduct/AddProduct';
 
 const router = createBrowserRouter([
   {
@@ -60,10 +61,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'add-new-product',
+        path: 'add-product',
         element: (
           <PrivateRoute role="admin">
-            <div>Add New Product</div>
+            <AddProduct />
           </PrivateRoute>
         ),
       },
