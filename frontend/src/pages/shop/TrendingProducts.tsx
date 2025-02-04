@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { ProductCards } from './ProductCards';
-
-import products from '../../data/products.json';
+import { useFetchAllProductsQuery } from '../../redux/features/products/productApi';
 
 const TrendingProducts = () => {
+  const { data: { products = [] } = {} } = useFetchAllProductsQuery({
+    category: '',
+    color: '',
+    minPrice: '',
+    maxPrice: '',
+    page: 1,
+    limit: 8,
+  });
   const [visibleProducts, setVisibleProducts] = useState(8);
 
   const loadMoreProducts = () => {
