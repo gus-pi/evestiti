@@ -8,7 +8,6 @@ const AdminDashMain = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const { data: stats, error, isLoading } = useGetAdminStatsQuery({});
-  console.log('stats: ', stats);
 
   if (isLoading)
     return <div className="text-center text-gray-500">Loading...</div>;

@@ -10,6 +10,7 @@ export type Product = {
   rating: number;
   author?: string;
   quantity: number;
+  createdAt?: Date;
 };
 
 type User = {
