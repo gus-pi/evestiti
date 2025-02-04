@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import React, { useState } from 'react';
-import { Product } from '../../../../types/types';
 import TextInput from './TextInput';
 import SelectInput from './SelectInput';
-import { color } from 'chart.js/helpers';
 import UploadImage from './UploadImage';
 import { useAddProductMutation } from '../../../../redux/features/products/productApi';
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   { label: 'Select Category', value: '' },
@@ -30,18 +29,12 @@ const colors = [
 
 const AddProduct = () => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const [product, setProduct] = useState<Product>({
-    _id: 0,
+  const [product, setProduct] = useState({
     name: '',
     category: '',
     description: '',
-    price: 0,
-    oldPrice: 0,
-    image: 'string',
     color: '',
-    rating: 0,
-    author: '',
-    quantity: 0,
+    price: '',
   });
   const [image, setImage] = useState('');
 
@@ -56,21 +49,37 @@ const AddProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('product: ', product);
+    // Validation: Check if any field is empty
     if (
-      !product.name ||
-      !product.category ||
-      !product.price ||
-      !product.description ||
-      !product.color
+      !product.name.trim() || // Use `.trim()` to prevent whitespace-only values
+      !product.category.trim() ||
+      !product.price || // price is a number, so `0` is falsy
+      !product.description.trim() ||
+      !product.color.trim()
     ) {
       alert('Please fill all required fields');
+      return; // ✅ Stop execution if validation fails
     }
+
     try {
       await addProduct({ ...product, image, author: user._id }).unwrap();
       alert('Product added successfully');
-      //setProduct()
+
+      // Reset form
+      setProduct({
+        name: '',
+        category: '',
+        description: '',
+        price: '',
+        color: '',
+      });
+      setImage('');
+      navigate('/');
     } catch (error) {
       console.log('Failed to submit product', error);
     }
@@ -96,8 +105,8 @@ const AddProduct = () => {
           options={categories}
         />
         <SelectInput
-          label="Colors"
-          name="colors"
+          label="Color"
+          name="color"
           value={product.color}
           onChange={handleChange}
           options={colors}
@@ -138,6 +147,7 @@ const AddProduct = () => {
           </button>
         </div>
       </form>
+      <div>{error && <span>Error</span>}</div>
     </div>
   );
 };
