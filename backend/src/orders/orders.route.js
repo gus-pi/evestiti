@@ -156,7 +156,7 @@ router.patch('/update-order-status/:id', async (req, res) => {
       },
       {
         new: true,
-        runValidators,
+        runValidators: true,
       }
     );
 
