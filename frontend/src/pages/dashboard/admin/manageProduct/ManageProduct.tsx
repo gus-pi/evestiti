@@ -23,7 +23,6 @@ const ManageProduct = () => {
     page: currentPage,
     limit: productsPerPage,
   });
-  console.log(products);
   //pagination
   const startProduct = (currentPage - 1) * productsPerPage + 1;
   const endProduct = startProduct + products.length - 1;

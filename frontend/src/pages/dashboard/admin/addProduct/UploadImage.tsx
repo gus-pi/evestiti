@@ -5,7 +5,7 @@ import { getBaseUrl } from '../../../../utils/baseURL';
 type UploadImageProps = {
   name: string;
   id: string;
-  value: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
   setImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
