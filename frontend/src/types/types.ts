@@ -17,7 +17,7 @@ export type User = {
   _id: number;
   username: string;
   email: string;
-  role: 'admin' | 'user';
+  role: string;
 };
 
 export type Review = {

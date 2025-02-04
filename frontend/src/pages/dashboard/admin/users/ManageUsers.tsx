@@ -4,10 +4,14 @@ import {
   useGetUserQuery,
 } from '../../../../redux/features/auth/authApi';
 import { User } from '../../../../types/types';
+import { useState } from 'react';
+import UpdateUserModal from './UpdateUserModal';
 
 const ManageUsers = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>();
+
   const { data: users = [], error, isLoading, refetch } = useGetUserQuery({});
-  console.log(users);
 
   const [deleteUser] = useDeleteUserMutation();
 
@@ -19,6 +23,16 @@ const ManageUsers = () => {
     } catch (error) {
       console.error('Error deleting user', error);
     }
+  };
+
+  const handleEdit = (user: User) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
   };
 
   return (
@@ -79,10 +93,22 @@ const ManageUsers = () => {
                           {user.email}
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          {user.role}
+                          <span
+                            className={`rounded-full py-[2px] px-3 ${
+                              user?.role === 'admin'
+                                ? 'bg-indigo-500 text-white '
+                                : 'bg-amber-300'
+                            }`}
+                          >
+                            {' '}
+                            {user?.role}
+                          </span>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 cursor-pointer hover:text-primary">
-                          <button className="flex gap-1 items-center hover:text-red-500">
+                          <button
+                            onClick={() => handleEdit(user)}
+                            className="flex gap-1 items-center hover:text-red-500"
+                          >
                             <i className="re-edit2-line"></i>
                             Edit
                           </button>
@@ -132,6 +158,13 @@ const ManageUsers = () => {
           </div>
         </footer>
       </section>
+      {isModalOpen && (
+        <UpdateUserModal
+          user={selectedUser}
+          onClose={handleCloseModal}
+          onRoleUpdate={refetch}
+        />
+      )}
     </>
   );
 };
