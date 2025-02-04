@@ -10,7 +10,7 @@ const UserProfile = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
-  const [editProfile, { isLoading, isError, error, isSuccess }] =
+  const [editProfile, { isLoading, isError, isSuccess }] =
     useEditProfileMutation();
 
   const [formData, setFormData] = useState({

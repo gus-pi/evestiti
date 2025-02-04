@@ -28,10 +28,6 @@ const TimelineStep = ({
   description,
   order,
 }: TimelineStepProps) => {
-  const iconBgColor =
-    isCompleted || isCurrent ? `bg-${icon.bgColor}` : 'bg-gray-100';
-  const iconTextColor =
-    isCompleted || isCurrent ? 'text-white' : `text-${icon.textColor}`;
   const connectorColor = isCompleted ? 'bg-blue-500' : 'bg-gray-200';
   const labelTextColor =
     isCompleted || isCurrent ? 'text-gray-900' : 'text-gray-500';

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { ProductCards } from './ProductCards';
 import ShopFiltering from './ShopFiltering';
@@ -23,7 +23,7 @@ const ShopPage = () => {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(8);
+  const [productsPerPage] = useState(8);
 
   const { category, color, priceRange } = activeFilter;
   const minPrice = priceRange.min;

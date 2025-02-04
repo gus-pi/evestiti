@@ -25,7 +25,7 @@ ChartJS.register(
 
 const UserDashMain = () => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const { data: stats, error, isLoading } = useGetUserStatsQuery(user?.email);
+  const { data: stats, isLoading } = useGetUserStatsQuery(user?.email);
 
   if (isLoading) {
     return <div className="text-center text-gray-500">Loading...</div>;

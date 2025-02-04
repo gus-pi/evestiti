@@ -12,7 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [loginUser, { isLoading: loginLoading }] = useLoginUserMutation();
+  const [loginUser] = useLoginUserMutation();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const response = await loginUser(data).unwrap();
 
-      const { token, user } = response;
+      const { user } = response;
 
       dispatch(setUser({ user }));
 

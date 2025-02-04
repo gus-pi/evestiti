@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import {
   useDeleteUserMutation,
   useGetUserQuery,
@@ -17,7 +16,7 @@ const ManageUsers = () => {
 
   const handleDeleteUser = async (id: number) => {
     try {
-      const response = await deleteUser(id).unwrap();
+      await deleteUser(id).unwrap();
       alert('User deleted successfully');
       refetch();
     } catch (error) {

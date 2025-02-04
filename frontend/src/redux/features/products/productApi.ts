@@ -34,7 +34,7 @@ const productsApi = createApi({
 
     fetchProductById: builder.query({
       query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Products', id }],
+      providesTags: (id) => [{ type: 'Products', id }],
     }),
 
     addProduct: builder.mutation({
@@ -67,7 +67,7 @@ const productsApi = createApi({
         method: 'DELETE',
         credentials: 'include',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Products', id }],
+      invalidatesTags: (id) => [{ type: 'Products', id }],
     }),
   }),
 });

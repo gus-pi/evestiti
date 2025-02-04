@@ -37,16 +37,15 @@ const cartSlice = createSlice({
             state.grandTotal = setGrandTotal(state)
         },
         updateQuantity: (state, action) => {
-            const products = state.products.map((product) => {
+            state.products.forEach((product) => {
                 if (product._id === action.payload.id) {
-                    if (action.payload.type === 'increment') {
-                        product.quantity += 1
-                    } else if (action.payload.type === 'decrement' && product.quantity > 1) {
-                        product.quantity -= 1
+                    if (action.payload.type === "increment") {
+                        product.quantity += 1;
+                    } else if (action.payload.type === "decrement" && product.quantity > 1) {
+                        product.quantity -= 1;
                     }
                 }
-                return product
-            })
+            });
             state.selectedItems = setSelectedItemsQty(state)
             state.totalPrice = setTotalPrice(state)
             state.tax = setTax(state)

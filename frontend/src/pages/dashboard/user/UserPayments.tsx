@@ -16,7 +16,7 @@ const UserPayments = () => {
   const orders = orderData?.orders;
 
   const totalPayment = orders
-    .reduce((acc: number, order: Order) => acc + order.amount, 0)
+    .reduce((acc: number, order: any) => acc + order.amount, 0)
     .toFixed(2);
 
   return (
@@ -28,7 +28,7 @@ const UserPayments = () => {
         </p>
         <ul>
           {orders &&
-            orders.map((item: Order, index: number) => (
+            orders.map((item: any, index: number) => (
               <li key={index}>
                 <h5 className="font-medium text-gray-800">
                   Order #{index + 1}

@@ -9,7 +9,7 @@ type UploadImageProps = {
   setImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const UploadImage = ({ name, id, value, setImage }: UploadImageProps) => {
+const UploadImage = ({ name, setImage }: UploadImageProps) => {
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState('');
 

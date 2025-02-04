@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const ManageProduct = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(12);
+  const [productsPerPage] = useState(12);
   const {
     data: { products = [], totalPages, totalProducts } = {},
     isLoading,
@@ -37,7 +37,7 @@ const ManageProduct = () => {
 
   const handleDeleteProduct = async (id: number) => {
     try {
-      const response = await deleteProduct(id).unwrap();
+      await deleteProduct(id).unwrap();
       alert('Product deleted successfully');
       await refetch();
     } catch (error) {

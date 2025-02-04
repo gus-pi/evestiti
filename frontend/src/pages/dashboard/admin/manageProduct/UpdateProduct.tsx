@@ -88,10 +88,6 @@ const UpdateProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = (image: string) => {
-    setNewImage(image);
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 

@@ -38,7 +38,7 @@ const AddProduct = () => {
   });
   const [image, setImage] = useState('');
 
-  const [addProduct, { isLoading, error }] = useAddProductMutation();
+  const [addProduct, { error }] = useAddProductMutation();
 
   const handleChange = (
     e: React.ChangeEvent<

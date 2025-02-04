@@ -10,7 +10,7 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [registerUser] = useRegisterUserMutation();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const Register = () => {
           <input
             type="text"
             name="username"
-            id="usaername"
+            id="username"
             placeholder="Username"
             required
             onChange={(e) => setUsername(e.target.value)}
