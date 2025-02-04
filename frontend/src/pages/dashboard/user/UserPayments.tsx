@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { useGetOrdersByEmailQuery } from '../../../redux/features/orders/orderApi';
-import { Order } from '../../../types/types';
 
 const UserPayments = () => {
   const user = useSelector((state: RootState) => state.auth.user);
